@@ -36,8 +36,6 @@ def update_json_new_restaurant(new_restaurant, username):
     if "https://goo.gl/maps/" not in new_restaurant and 'maps.app.goo.gl' not in new_restaurant:
         print(new_restaurant)
         return "Ops! Link non valido, devi fornire un link con formato https://goo.gl/maps/<id>"
-    if 'Francesc' not in username and 'Maria' not in username and 'puxi' not in username and 'maria' not in username:
-        return "Ops! Non sei un utente autorizzato"
     f.close()
     data['restaurants'][key] = new_restaurant
     print(data)
