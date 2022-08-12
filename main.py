@@ -4,6 +4,8 @@ from telegram.ext.callbackcontext import CallbackContext
 from telegram.ext.commandhandler import CommandHandler
 from telegram.ext.messagehandler import MessageHandler
 from telegram.ext.filters import Filters
+from telegram import *
+from telegram.ext import *
 import os
 from get_json import get_messages, get_random_restaurant, update_json_new_restaurant, get_list_restaurants
 
@@ -18,6 +20,8 @@ def start(update: Update, context: CallbackContext):
 
 def get_restaurant(update: Update, context: CallbackContext):
     print("New get random restaurant {} - {}".format(update, context))
+    buttons = [[KeyboardButton("Pizza")], [KeyboardButton("Cucina romana")]]
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Scieglie!", reply_markup=ReplyKeyboardMarkup(buttons))
     update.message.reply_text(get_random_restaurant())
 
 
