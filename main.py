@@ -32,7 +32,7 @@ def get_restaurant(update: Update, context: CallbackContext):
         [KeyboardButton(category_text_sushi)], [KeyboardButton(category_text_greco)],
         [KeyboardButton(category_text_messicano)], [KeyboardButton(category_text_etnico)]
     ]
-    context.bot.send_message(chat_id=update.effective_chat.id, text="Scieglie!",
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Scieglie categoria!",
                              reply_markup=ReplyKeyboardMarkup(buttons))
 
 
@@ -48,7 +48,7 @@ def set_new_restaurant(update: Update, context: CallbackContext):
         new_link = ctx['text'].replace('/nuovo ', '')
         user = ctx['chat']['first_name']
         print("User: {username} - Insert new link {link}".format(username=user, link=new_link))
-        resp = update_json_new_restaurant(new_restaurant=new_link, username=user)
+        resp = update_json_new_restaurant(new_restaurant=new_link, category='romana', username=user)
         update.message.reply_text(resp)
     except Exception as err:
         print(err)
@@ -56,18 +56,30 @@ def set_new_restaurant(update: Update, context: CallbackContext):
 
 
 def message_handler(update: Update, context: CallbackContext):
-    if update.message.text == category_text_pizza:
-        update.message.reply_text(get_random_restaurant("pizza"))
-    if update.message.text == category_text_romana:
-        update.message.reply_text(get_random_restaurant("romana"))
-    if update.message.text == category_text_sushi:
-        update.message.reply_text(get_random_restaurant("sushi"))
-    update.message.reply_text("Ops! Mi dispiace, {0} non è un comando valido".format(update.message.text))
+    val = get_category(update.message.text)
+    if val:
+        update.message.reply_text(get_random_restaurant(val))
+    else:
+        update.message.reply_text("Ops! Mi dispiace, {0} non è un comando valido".format(update.message.text))
 
 
 def unknown_text(update: Update, context: CallbackContext):
     update.message.reply_text("Ops! Mi dispiace non capisco cosa intendi: '%s'" % update.message.text)
 
+
+def get_category(msg):
+    if msg == category_text_pizza:
+        return "pizza"
+    if msg == category_text_romana:
+        return "romana"
+    if msg == category_text_etnico:
+        return "etnico"
+    if msg == category_text_greco:
+        return "greco"
+    if msg == category_text_sushi:
+        return "sushi"
+    if msg == category_text_messicano:
+        return "messicano"
 
 updater.dispatcher.add_handler(CommandHandler('start', start))
 updater.dispatcher.add_handler(CommandHandler('random', get_restaurant))
