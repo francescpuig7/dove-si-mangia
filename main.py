@@ -60,6 +60,8 @@ def message_handler(update: Update, context: CallbackContext):
         update.message.reply_text(get_random_restaurant("pizza"))
     if update.message.text == category_text_romana:
         update.message.reply_text(get_random_restaurant("romana"))
+    if update.message.text == category_text_sushi:
+        update.message.reply_text(get_random_restaurant("sushi"))
     update.message.reply_text("Ops! Mi dispiace, {0} non è un comando valido".format(update.message.text))
 
 
