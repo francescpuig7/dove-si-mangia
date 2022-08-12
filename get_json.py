@@ -25,9 +25,12 @@ def get_list_restaurants():
 def get_random_restaurant(last_key):
     f = open('reply_text.json')
     data = json.load(f)
-    data = data['restaurants'][last_key]
-    key = randint(1, len(data))
-    val = data.pop(str(key), 'Ops! Messagio non trovato')
+    data = data['restaurants']['category'][last_key]
+    try:
+        key = randint(1, len(data))
+        val = data.pop(str(key), 'Ops! Messagio non trovato')
+    except:
+        val = 'Ops! Categoria vuota'
     f.close()
     return val
 
