@@ -15,11 +15,12 @@ def get_list_restaurants():
     f = open('reply_text.json')
     data = json.load(f)
     data = data['restaurants']['category']
-    res = []
+    res = list()
     for k, v in data.items():
-        res.append(v)
+        for x, y in v.items():
+            res.append(y)
     f.close()
-    return data
+    return res
 
 
 def get_random_restaurant(last_key):

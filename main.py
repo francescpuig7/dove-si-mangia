@@ -38,7 +38,7 @@ def get_restaurant(update: Update, context: CallbackContext):
 
 def get_all_restaurants(update: Update, context: CallbackContext):
     rests = get_list_restaurants()
-    for k, v in rests.items():
+    for v in rests:
         update.message.reply_text(v)
 
 
